@@ -19,7 +19,7 @@ INSTRUCTIONS:
 
 // TODO: Replace this with the actual backend API URL from Member 2
 // Example: "https://your-project.supabase.co/rest/v1/doubts"
-const API_URL = "YOUR_BACKEND_API_URL_HERE";
+const API_URL = "http://localhost:5000/api/doubts";
 
 // TODO: If your backend requires an API key, add it here
 // Example for Supabase: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -386,14 +386,11 @@ Custom Backend:
 
 /* ========================================
    ADDITIONAL NOTES FOR MEMBER 2 (BACKEND)
-   ======================================== */
+   ======================================== 
+
 1. POST Endpoint for submitting doubts:
    - Accept: { subject: string, courseCode: string, teacher: string, question: string }
    - Return: { id: number, subject: string, courseCode: string, teacher: string, question: string, createdAt: timestamp }
-
-1. POST Endpoint for submitting doubts:
-   - Accept: { subject: string, question: string }
-   - Return: { id: number, subject: string, question: string, createdAt: timestamp }
    
 2. GET Endpoint for fetching latest doubt:
    - No request body needed
@@ -681,61 +678,62 @@ function displayDoubts(doubts) {
     
     doubtsList.innerHTML = "";
     
-    doubts.forEach(doubt => {
+    doubts.forEach((doubt, index) => {
         const doubtItem = document.createElement("div");
-        doubtItem.className = "doubt-item";
+        doubtItem.className = "professional-doubt-card";
         
-        const status = doubt.status || (doubt.answer ? "answered" : "pending");
-        const statusClass = status === "answered" ? "status-answered" : "status-pending";
+        const status = doubt.status || (doubt.answer ? "Answered" : "Pending");
+        const statusClass = status === "Answered" ? "status-answered" : "status-pending";
         
         const date = new Date(doubt.createdAt || doubt.created_at);
         const formattedDate = date.toLocaleString('en-US', {
+            weekday: 'short',
             month: 'short',
             day: 'numeric',
+            year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
         });
         
         doubtItem.innerHTML = `
-            <div class="doubt-item-header">
-                <h3 class="doubt-item-title">${doubt.subject}</h3>
-                <span class="doubt-status ${statusClass}">${status.toUpperCase()}</span>
+            <div class="doubt-card-header">
+                <div class="doubt-number">#${String(index + 1).padStart(3, '0')}</div>
+                <span class="doubt-badge ${statusClass}">${status}</span>
             </div>
             
-            <div class="doubt-item-details">
-                <div class="doubt-detail-row">
-                    <span class="doubt-detail-label">Course Code:</span>
-                    <span class="doubt-detail-value">${doubt.courseCode || doubt.course_code || 'N/A'}</span>
-                </div>
-                <div class="doubt-detail-row">
-                    <span class="doubt-detail-label">Teacher:</span>
-                    <span class="doubt-detail-value">${doubt.teacher || 'N/A'}</span>
-                </div>
-                <div class="doubt-detail-row">
-                    <span class="doubt-detail-label">Asked on:</span>
-                    <span class="doubt-detail-value">${formattedDate}</span>
+            <div class="doubt-main-info">
+                <h3 class="doubt-subject-title">📚 ${doubt.subject}</h3>
+                <div class="doubt-meta">
+                    <span class="meta-item"><strong>Course:</strong> ${doubt.courseCode || doubt.course_code || 'N/A'}</span>
+                    <span class="meta-item"><strong>Teacher:</strong> ${doubt.teacher || 'N/A'}</span>
+                    <span class="meta-item"><strong>Date:</strong> ${formattedDate}</span>
                 </div>
             </div>
             
-            <div class="doubt-item-question">
-                <p><strong>Question:</strong> ${doubt.question}</p>
+            <div class="doubt-question-section">
+                <h4 class="question-label">❓ Student's Question:</h4>
+                <div class="question-content">${doubt.question}</div>
             </div>
             
             ${doubt.answer ? `
-                <div class="answer-display">
-                    <h4>✅ Your Answer:</h4>
-                    <p>${doubt.answer}</p>
+                <div class="answer-section-display">
+                    <h4 class="answer-label">✅ Your Answer:</h4>
+                    <div class="answer-content">${doubt.answer}</div>
                 </div>
-            ` : ''}
+            ` : `
+                <div class="pending-answer-section">
+                    <p class="pending-text">⏳ This doubt is waiting for your response. Click below to answer.</p>
+                </div>
+            `}
             
-            <div class="doubt-item-actions">
+            <div class="doubt-card-actions">
                 ${!doubt.answer ? `
-                    <button class="btn-answer" onclick="openAnswerModal(${doubt.id}, '${doubt.subject.replace(/'/g, "\\'")}', '${doubt.courseCode || doubt.course_code || 'N/A'}', '${doubt.question.replace(/'/g, "\\'")}')">
-                        ✍️ Answer This Doubt
+                    <button class="btn-primary-action" onclick="openAnswerModal('${doubt.id}', \`${doubt.subject}\`, \`${doubt.courseCode || doubt.course_code || 'N/A'}\`, \`${doubt.question}\`)">
+                        ✍️ Write Answer
                     </button>
                 ` : `
-                    <button class="btn-view-answer" onclick="alert('Answer already submitted!')">
-                        ✅ Answered
+                    <button class="btn-completed" disabled>
+                        ✅ Already Answered
                     </button>
                 `}
             </div>
