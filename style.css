@@ -1,0 +1,1145 @@
+/*
+============================================
+STYLESHEET FOR PROFSENSEI - ANONYMOUS DOUBT BOX
+============================================
+INSTRUCTIONS:
+- This CSS file styles both index.html and latest.html
+- The design is clean, minimal, and responsive
+- Color scheme: Professional blue with accents
+- Mobile-first responsive design (works on all devices)
+- Easy to customize colors and spacing
+============================================
+*/
+
+/* ========================================
+   1. RESET & BASE STYLES
+   ======================================== */
+
+/* Remove default margins and paddings, set consistent box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set base font and background for entire page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* ========================================
+   1.5 LOGIN PAGE STYLES
+   ======================================== */
+
+/* Login wrapper - full screen */
+.login-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Login container */
+.login-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 100%;
+    padding: 50px 40px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Login header */
+.login-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.login-header h1 {
+    color: #667eea;
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.login-subtitle {
+    color: #666;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.login-description {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Role cards container */
+.role-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Individual role card */
+.role-card {
+    background: #f8f9fa;
+    border: 3px solid transparent;
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.role-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.role-card:hover::before {
+    left: 100%;
+}
+
+.role-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.student-card {
+    border-color: #667eea;
+}
+
+.student-card:hover {
+    background: linear-gradient(135deg, #667eea20, #764ba220);
+    border-color: #667eea;
+}
+
+.teacher-card {
+    border-color: #28a745;
+}
+
+.teacher-card:hover {
+    background: linear-gradient(135deg, #28a74520, #20c99720);
+    border-color: #28a745;
+}
+
+/* Role icon */
+.role-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.role-card h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.role-card p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* Role buttons */
+.role-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.student-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.student-btn:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #6a4291 100%);
+    transform: scale(1.05);
+}
+
+.teacher-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.teacher-btn:hover {
+    background: linear-gradient(135deg, #218838 0%, #1aa179 100%);
+    transform: scale(1.05);
+}
+
+/* Login footer */
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Teacher login specific styles */
+.teacher-login-container {
+    max-width: 500px;
+}
+
+.back-link {
+    display: inline-block;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: #5568d3;
+    transform: translateX(-5px);
+}
+
+.login-error {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+    font-weight: 500;
+}
+
+.login-info {
+    background: #e7f3ff;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.login-info h3 {
+    color: #667eea;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.login-info p {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.login-info .note {
+    color: #666;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.field-hint strong {
+    color: #667eea;
+}
+
+/* ========================================
+   2. CONTAINER & LAYOUT
+   ======================================== */
+
+/* Main container that holds all content */
+.container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Fade-in animation for smooth page load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   3. HEADER STYLES
+   ======================================== */
+
+/* Header section with title and subtitle */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 20px;
+}
+
+/* Main title styling */
+.header h1 {
+    color: #667eea;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Subtitle styling */
+.subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* ========================================
+   4. NAVIGATION LINKS
+   ======================================== */
+
+/* Navigation bar for switching between pages */
+.nav-links {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+/* Individual navigation link styling */
+.nav-link {
+    text-decoration: none;
+    color: #667eea;
+    padding: 10px 20px;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+/* Hover effect for navigation links */
+.nav-link:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Active (current page) navigation link */
+.nav-link.active {
+    background: #667eea;
+    color: white;
+}
+
+/* Logout link styling */
+.logout-link {
+    background: #dc3545;
+    color: white !important;
+    border-color: #dc3545;
+}
+
+.logout-link:hover {
+    background: #c82333;
+    color: white !important;
+    border-color: #c82333;
+}
+
+/* ========================================
+   5. INFO BOX & FILTER SECTION
+   ======================================== */
+
+/* Info box for students */
+.info-box {
+    background: #e7f3ff;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.info-box h3 {
+    color: #667eea;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.info-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-box ul li {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.info-box ul li:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    background: #667eea;
+    border-radius: 50%;
+}
+
+/* Filter section for student view */
+.filter-section {
+    background: #f8f9fa;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.filter-section h3 {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.filter-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: end;
+}
+
+.btn-filter {
+    padding: 12px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-filter:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+/* ========================================
+   7. BUTTONS
+   ======================================== */
+   6. FORM CONTAINER & ELEMENTS
+   ======================================== */
+
+/* Container for the doubt submission form */
+.form-container,
+.latest-container {
+    margin-bottom: 30px;
+}
+
+/* Form title */
+.form-container h2,
+.latest-container h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+/* Form description text */
+.form-description,
+.section-description {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+/* Individual form field container */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Form labels */
+.form-group label {
+    display: block;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+/* Input, select, and textarea base styling */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+/* Select dropdown specific styling */
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+/* Focus state for inputs, selects, and textareas */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Hover state for select dropdown */
+.form-group select:hover {
+    border-color: #667eea;
+}
+
+/* Textarea specific styling */
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Field hint text below inputs */
+.field-hint {
+    display: block;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* ========================================
+   6. BUTTONS
+   ======================================== */
+
+/* Primary submit button */
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+/* Hover effect for submit button */
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Active/pressed state for submit button */
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Disabled state for submit button */
+.btn-submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Retry button styling */
+.btn-retry {
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Link button styling */
+.btn-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-link:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   7. MESSAGE BOX (Success/Error)
+   ======================================== */
+
+/* Container for success/error messages */
+.message-box {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    display: none;
+    font-weight: 500;
+}
+
+/* Success message styling */
+.message-box.success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+    display: block;
+}
+
+/* Error message styling */
+.message-box.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+    display: block;
+}
+
+/* ========================================
+   8. LOADING INDICATOR
+   ======================================== */
+
+/* Loading indicator container */
+.loading {
+    text-align: center;
+    padding: 40px;
+}
+
+/* Spinner animation */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+/* Spin animation keyframes */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ========================================
+   9. DOUBT CARD (Latest Doubt Display)
+   ======================================== */
+
+/* Card container for displaying doubt */
+.doubt-card {
+    background: #f8f9fa;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+/* Doubt card sections */
+.doubt-header,
+.doubt-meta,
+.doubt-body,
+.doubt-footer {
+    margin-bottom: 20px;
+}
+
+.doubt-footer {
+    margin-bottom: 0;
+}
+
+/* Meta information styling */
+.doubt-meta {
+    margin-bottom: 15px;
+}
+
+.doubt-meta-text {
+    color: #667eea;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Label styling inside doubt card */
+.doubt-label {
+    display: block;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* Subject heading */
+.doubt-subject {
+    color: #333;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* Question text */
+.doubt-question {
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Timestamp text */
+.doubt-time {
+    color: #888;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ========================================
+   10. NO DATA & ERROR MESSAGES
+   ======================================== */
+
+/* No data message styling */
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.no-data p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* Error message styling */
+.error-message {
+    text-align: center;
+    padding: 40px;
+    color: #721c24;
+}
+
+.error-message p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+/* ========================================
+   11. TEACHER DASHBOARD STYLES
+   ======================================== */
+
+/* Teacher filter section */
+.teacher-filter {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 2px solid #667eea;
+}
+
+.teacher-filter h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+/* Doubts container */
+.doubts-container {
+    margin-bottom: 30px;
+}
+
+.doubts-container h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+/* Individual doubt card in list */
+.doubt-item {
+    background: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.doubt-item:hover {
+    border-color: #667eea;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Doubt item header */
+.doubt-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.doubt-item-title {
+    color: #667eea;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.doubt-status {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-answered {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Doubt item details */
+.doubt-item-details {
+    margin-bottom: 15px;
+}
+
+.doubt-detail-row {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.doubt-detail-label {
+    font-weight: 600;
+    color: #667eea;
+    min-width: 120px;
+}
+
+.doubt-detail-value {
+    color: #555;
+}
+
+/* Doubt item question */
+.doubt-item-question {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #667eea;
+}
+
+.doubt-item-question p {
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Doubt item actions */
+.doubt-item-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-answer {
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-answer:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+}
+
+.btn-view-answer {
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-view-answer:hover {
+    background: #218838;
+}
+
+/* ========================================
+   12. MODAL STYLES (POPUP)
+   ======================================== */
+
+/* Modal overlay */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close button */
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #667eea;
+}
+
+/* Modal heading */
+.modal-content h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+/* Modal doubt info display */
+.modal-doubt-info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-left: 4px solid #667eea;
+}
+
+.modal-field {
+    margin-bottom: 15px;
+}
+
+.modal-field:last-child {
+    margin-bottom: 0;
+}
+
+.modal-field strong {
+    display: block;
+    color: #667eea;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.modal-field p {
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Modal buttons */
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    padding: 12px 25px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+}
+
+/* Answer display section */
+.answer-display {
+    background: #d4edda;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    border-left: 4px solid #28a745;
+}
+
+.answer-display h4 {
+    color: #155724;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.answer-display p {
+    color: #155724;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.answer-display p {
+    color: #155724;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Pending display section */
+.pending-display {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    border-left: 4px solid #ffc107;
+    text-align: center;
+}
+
+.pending-display p {
+    color: #856404;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ========================================
+   13. FOOTER
+   ======================================== */
+
+/* Footer styling */
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   14. RESPONSIVE DESIGN (Mobile)
+   ======================================== */
+
+/* Styles for screens smaller than 600px (mobile phones) */
+@media (max-width: 600px) {
+    /* Reduce container padding on small screens */
+    .container {
+        padding: 25px;
+    }
+    
+    /* Smaller header text */
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    /* Smaller subtitle */
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Stack navigation links vertically */
+    .nav-links {
+        flex-direction: column;
+    }
+    
+    /* Full width nav links */
+    .nav-link {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Smaller form title */
+    .form-container h2,
+    .latest-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* Smaller doubt subject */
+    .doubt-subject {
+        font-size: 1.3rem;
+    }
+}
+
+/*
+============================================
+END OF STYLESHEET
+============================================
+Feel free to customize colors, spacing, and styles
+to match your preferences!
+============================================
+*/

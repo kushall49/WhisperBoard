@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login - ProfSensei</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+    ============================================
+    TEACHER LOGIN PAGE INSTRUCTIONS:
+    ============================================
+    1. Teachers must login with credentials to access dashboard
+    2. Default credentials are hardcoded for demo (change in production)
+    3. After successful login, teacher is redirected to dashboard
+    4. Session is maintained to prevent unauthorized access
+    5. Students cannot access this page without proper credentials
+    ============================================
+    -->
+
+    <div class="login-wrapper">
+        <div class="login-container teacher-login-container">
+            
+            <!-- Back Button -->
+            <a href="login.html" class="back-link">← Back to Home</a>
+            
+            <!-- Header Section -->
+            <header class="login-header">
+                <div class="role-icon">👨‍🏫</div>
+                <h1>Teacher Login</h1>
+                <p class="login-subtitle">Access Your Dashboard</p>
+            </header>
+
+            <!-- Login Form -->
+            <form id="teacherLoginForm" onsubmit="handleTeacherLogin(event)">
+                
+                <!-- Teacher Name Dropdown -->
+                <div class="form-group">
+                    <label for="teacherName">👤 Select Your Name</label>
+                    <select 
+                        id="teacherName" 
+                        name="teacherName" 
+                        required
+                    >
+                        <option value="" disabled selected>Choose your name...</option>
+                        <option value="Dr. Sharma">Dr. Sharma</option>
+                        <option value="Prof. Kumar">Prof. Kumar</option>
+                        <option value="Dr. Patel">Dr. Patel</option>
+                        <option value="Prof. Singh">Prof. Singh</option>
+                        <option value="Dr. Mehta">Dr. Mehta</option>
+                        <option value="Prof. Gupta">Prof. Gupta</option>
+                        <option value="Dr. Verma">Dr. Verma</option>
+                        <option value="Prof. Reddy">Prof. Reddy</option>
+                        <option value="Dr. Desai">Dr. Desai</option>
+                        <option value="Prof. Joshi">Prof. Joshi</option>
+                    </select>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="teacherPassword">🔒 Password</label>
+                    <input 
+                        type="password" 
+                        id="teacherPassword" 
+                        name="teacherPassword" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                    <small class="field-hint">Default password for all teachers: <strong>teacher123</strong></small>
+                </div>
+
+                <!-- Error Message Display -->
+                <div id="loginError" class="login-error" style="display: none;"></div>
+
+                <!-- Login Button -->
+                <button type="submit" class="btn-submit teacher-btn" id="loginBtn">
+                    Login to Dashboard
+                </button>
+
+            </form>
+
+            <!-- Info Box -->
+            <div class="login-info">
+                <h3>ℹ️ Demo Credentials</h3>
+                <p><strong>Username:</strong> Select any teacher name</p>
+                <p><strong>Password:</strong> teacher123</p>
+                <p class="note">Note: In production, each teacher should have unique secure passwords.</p>
+            </div>
+
+            <!-- Footer Section -->
+            <footer class="login-footer">
+                <p>ProfSensei © 2025 | Secure Teacher Access</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- JavaScript for teacher login -->
+    <script>
+        /**
+         * handleTeacherLogin()
+         * 
+         * Purpose: Validate teacher credentials and grant access to dashboard
+         * For demo: All teachers use password "teacher123"
+         * In production: Connect to backend authentication API
+         */
+        function handleTeacherLogin(event) {
+            event.preventDefault();
+            
+            console.log("Teacher login attempt...");
+            
+            const teacherName = document.getElementById("teacherName").value;
+            const password = document.getElementById("teacherPassword").value;
+            const loginError = document.getElementById("loginError");
+            const loginBtn = document.getElementById("loginBtn");
+            
+            // Clear previous error
+            loginError.style.display = "none";
+            loginError.textContent = "";
+            
+            // Disable button during processing
+            loginBtn.disabled = true;
+            loginBtn.textContent = "Logging in...";
+            
+            // Simulate authentication delay
+            setTimeout(() => {
+                // For demo: hardcoded password validation
+                // In production: Make API call to backend for authentication
+                const DEMO_PASSWORD = "teacher123";
+                
+                if (password === DEMO_PASSWORD) {
+                    // Authentication successful
+                    console.log("Login successful for:", teacherName);
+                    
+                    // Store authentication in sessionStorage
+                    sessionStorage.setItem("userRole", "teacher");
+                    sessionStorage.setItem("teacherName", teacherName);
+                    sessionStorage.setItem("isAuthenticated", "true");
+                    sessionStorage.setItem("loginTime", new Date().toISOString());
+                    
+                    // Show success message
+                    loginError.style.display = "block";
+                    loginError.style.background = "#d4edda";
+                    loginError.style.color = "#155724";
+                    loginError.style.borderColor = "#c3e6cb";
+                    loginError.textContent = "✅ Login successful! Redirecting...";
+                    
+                    // Redirect to teacher dashboard after 1 second
+                    setTimeout(() => {
+                        window.location.href = "teacher-dashboard.html";
+                    }, 1000);
+                    
+                } else {
+                    // Authentication failed
+                    console.error("Login failed: Invalid password");
+                    
+                    loginError.style.display = "block";
+                    loginError.textContent = "❌ Invalid password! Please try again.";
+                    
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = "Login to Dashboard";
+                }
+            }, 500);
+        }
+
+        // Check if already logged in
+        window.addEventListener('DOMContentLoaded', function() {
+            const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+            const userRole = sessionStorage.getItem("userRole");
+            
+            if (isAuthenticated === "true" && userRole === "teacher") {
+                // Already logged in, redirect to dashboard
+                window.location.href = "teacher-dashboard.html";
+            }
+        });
+    </script>
+
+    <!--
+    ============================================
+    PRODUCTION IMPLEMENTATION NOTES:
+    ============================================
+    For Member 2 (Backend Developer):
+    
+    Replace the hardcoded password check with API call:
+    
+    async function handleTeacherLogin(event) {
+        event.preventDefault();
+        
+        const teacherName = document.getElementById("teacherName").value;
+        const password = document.getElementById("teacherPassword").value;
+        
+        try {
+            const response = await fetch('YOUR_API_URL/auth/teacher/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: teacherName, password: password })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // Store JWT token or session ID
+                sessionStorage.setItem("authToken", data.token);
+                sessionStorage.setItem("userRole", "teacher");
+                sessionStorage.setItem("teacherName", teacherName);
+                window.location.href = "teacher-dashboard.html";
+            } else {
+                // Show error message
+                loginError.textContent = "Invalid credentials";
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+        }
+    }
+    
+    Backend should:
+    1. Hash passwords (bcrypt)
+    2. Use JWT tokens for session management
+    3. Implement rate limiting to prevent brute force
+    4. Add HTTPS for secure transmission
+    ============================================
+    -->
+
+</body>
+</html>

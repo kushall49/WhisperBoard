@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfSensei - Anonymous Doubt Box</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+    ============================================
+    INSTRUCTIONS FOR USE:
+    ============================================
+    1. This is the main page where students submit their doubts anonymously
+    2. Update the API_URL in script.js with the backend endpoint provided by Member 2
+    3. Update the API_KEY in script.js if authentication is required
+    4. The form collects Subject and Question fields
+    5. On submit, data is sent to the backend via POST request
+    6. You can navigate to latest.html to see the most recent doubt
+    ============================================
+    -->
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>🎓 ProfSensei</h1>
+            <p class="subtitle">Anonymous Doubt Box</p>
+        </header>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link active">Submit Doubt</a>
+            <a href="latest.html" class="nav-link">View Latest Doubt</a>
+            <a href="teacher.html" class="nav-link">Teacher Dashboard</a>
+        </nav>
+
+        <!-- Main Form Section -->
+        <div class="form-container">
+            <h2>Ask Your Doubt Anonymously</h2>
+            <p class="form-description">
+                Don't hesitate! Ask any question without revealing your identity.
+            </p>
+
+            <!-- Doubt Submission Form -->
+            <form id="doubtForm" onsubmit="submitDoubt(event)">
+                
+                <!-- Subject Dropdown -->
+                <div class="form-group">
+                    <label for="subject">📚 Select Subject</label>
+                    <select 
+                        id="subject" 
+                        name="subject" 
+                        required
+                    >
+                        <option value="" disabled selected>Choose a subject...</option>
+                        <option value="Data Structures">Data Structures</option>
+                        <option value="Algorithms">Algorithms</option>
+                        <option value="Database Management">Database Management</option>
+                        <option value="Operating Systems">Operating Systems</option>
+                        <option value="Computer Networks">Computer Networks</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <small class="field-hint">Select the subject related to your doubt</small>
+                </div>
+
+                <!-- Course Code Input -->
+                <div class="form-group">
+                    <label for="courseCode">🔢 Course Code</label>
+                    <input 
+                        type="text" 
+                        id="courseCode" 
+                        name="courseCode" 
+                        placeholder="e.g., CS101, PHY201, MATH301"
+                        required
+                        maxlength="20"
+                    >
+                    <small class="field-hint">Enter the course code (e.g., CS101)</small>
+                </div>
+
+                <!-- Teacher Dropdown -->
+                <div class="form-group">
+                    <label for="teacher">👨‍🏫 Select Teacher</label>
+                    <select 
+                        id="teacher" 
+                        name="teacher" 
+                        required
+                    >
+                        <option value="" disabled selected>Choose your teacher...</option>
+                        <option value="Dr. Sharma">Dr. Sharma</option>
+                        <option value="Prof. Kumar">Prof. Kumar</option>
+                        <option value="Dr. Patel">Dr. Patel</option>
+                        <option value="Prof. Singh">Prof. Singh</option>
+                        <option value="Dr. Mehta">Dr. Mehta</option>
+                        <option value="Prof. Gupta">Prof. Gupta</option>
+                        <option value="Dr. Verma">Dr. Verma</option>
+                        <option value="Prof. Reddy">Prof. Reddy</option>
+                        <option value="Dr. Desai">Dr. Desai</option>
+                        <option value="Prof. Joshi">Prof. Joshi</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <small class="field-hint">Select your course instructor</small>
+                </div>
+
+                <!-- Question Textarea Field -->
+                <div class="form-group">
+                    <label for="question">❓ Your Question</label>
+                    <textarea 
+                        id="question" 
+                        name="question" 
+                        rows="6"
+                        placeholder="Describe your doubt in detail..."
+                        required
+                        maxlength="1000"
+                    ></textarea>
+                    <small class="field-hint">Be as detailed as possible (max 1000 characters)</small>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    Submit Doubt
+                </button>
+
+            </form>
+
+            <!-- Success/Error Message Display Area -->
+            <div id="messageBox" class="message-box"></div>
+
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>ProfSensei © 2025 | Helping students learn without fear</p>
+        </footer>
+
+    </div>
+
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>
+
+    <!--
+    ============================================
+    DEMO DATA EXAMPLE (for testing):
+    ============================================
+    Subject: "Data Structures"
+    Course Code: "CS201"
+    Teacher: "Dr. Sharma"
+    Question: "Can you explain the difference between Stack and Queue with real-world examples?"
+    
+    Expected JSON sent to backend:
+    {
+        "subject": "Data Structures",
+        "courseCode": "CS201",
+        "teacher": "Dr. Sharma",
+        "question": "Can you explain the difference between Stack and Queue with real-world examples?"
+    }
+    ============================================
+    -->
+
+</body>
+</html>

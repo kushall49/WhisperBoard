@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Doubts - Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+    ============================================
+    STUDENT VIEW DOUBTS PAGE:
+    ============================================
+    1. Students can see all submitted doubts
+    2. Shows: Subject, Course Code, Teacher, Question, Status
+    3. If answered, shows the answer from teacher
+    4. If pending, shows "Waiting for teacher's response"
+    5. No edit/delete options - view only
+    ============================================
+    -->
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>🎓 ProfSensei - View All Doubts</h1>
+            <p class="subtitle">Browse Submitted Questions</p>
+        </header>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="student.html" class="nav-link">Submit Doubt</a>
+            <a href="student-view.html" class="nav-link active">View All Doubts</a>
+            <a href="login.html" class="nav-link logout-link">🚪 Logout</a>
+        </nav>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h3>🔍 Filter Doubts</h3>
+            <div class="filter-controls">
+                <div class="form-group">
+                    <label for="filterSubject">By Subject:</label>
+                    <select id="filterSubject" onchange="loadStudentDoubts()">
+                        <option value="all">All Subjects</option>
+                        <option value="Data Structures">Data Structures</option>
+                        <option value="Algorithms">Algorithms</option>
+                        <option value="Database Management">Database Management</option>
+                        <option value="Operating Systems">Operating Systems</option>
+                        <option value="Computer Networks">Computer Networks</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Chemistry">Chemistry</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="filterStatus">By Status:</label>
+                    <select id="filterStatus" onchange="loadStudentDoubts()">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="answered">Answered</option>
+                    </select>
+                </div>
+                
+                <button onclick="loadStudentDoubts()" class="btn-filter">Apply Filters</button>
+            </div>
+        </div>
+
+        <!-- Doubts Display Section -->
+        <div class="doubts-container">
+            <h2>📚 All Submitted Doubts</h2>
+            
+            <!-- Loading Indicator -->
+            <div id="loadingStudentDoubts" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading doubts...</p>
+            </div>
+
+            <!-- Doubts List -->
+            <div id="studentDoubtsList"></div>
+
+            <!-- No Doubts Message -->
+            <div id="noStudentDoubtsMessage" class="no-data" style="display: none;">
+                <p>📭 No doubts found.</p>
+                <p>Be the first to ask a question!</p>
+                <a href="student.html" class="btn-link">Submit a Doubt</a>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorStudentDoubts" class="error-message" style="display: none;">
+                <p>❌ Error loading doubts. Please try again.</p>
+                <button onclick="loadStudentDoubts()" class="btn-retry">Retry</button>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>ProfSensei © 2025 | Helping students learn without fear</p>
+        </footer>
+
+    </div>
+
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>
+    
+    <!-- Auto-load doubts when page loads -->
+    <script>
+        // Verify user role
+        const userRole = sessionStorage.getItem("userRole");
+        if (userRole !== "student") {
+            window.location.href = "login.html";
+        }
+        
+        // Load doubts automatically
+        window.addEventListener('DOMContentLoaded', function() {
+            loadStudentDoubts();
+        });
+    </script>
+
+</body>
+</html>

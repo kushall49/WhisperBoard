@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Doubt - ProfSensei</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+    ============================================
+    INSTRUCTIONS FOR USE:
+    ============================================
+    1. This page displays the most recent doubt submitted by students
+    2. Update the API_URL in script.js with the backend GET endpoint
+    3. The page automatically fetches the latest doubt when it loads
+    4. If no doubts exist, it shows a friendly message
+    5. You can navigate back to index.html to submit a new doubt
+    ============================================
+    -->
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>🎓 ProfSensei</h1>
+            <p class="subtitle">Anonymous Doubt Box</p>
+        </header>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Submit Doubt</a>
+            <a href="latest.html" class="nav-link active">View Latest Doubt</a>
+            <a href="teacher.html" class="nav-link">Teacher Dashboard</a>
+        </nav>
+
+        <!-- Latest Doubt Display Section -->
+        <div class="latest-container">
+            <h2>📝 Latest Doubt Submitted</h2>
+            <p class="section-description">
+                This shows the most recent question asked by a student
+            </p>
+
+            <!-- Loading Indicator -->
+            <div id="loadingIndicator" class="loading">
+                <div class="spinner"></div>
+                <p>Loading latest doubt...</p>
+            </div>
+
+            <!-- Doubt Display Card -->
+            <div id="doubtCard" class="doubt-card" style="display: none;">
+                
+                <!-- Subject Display -->
+                <div class="doubt-header">
+                    <span class="doubt-label">Subject:</span>
+                    <h3 id="doubtSubject" class="doubt-subject">Loading...</h3>
+                </div>
+
+                <!-- Course Code Display -->
+                <div class="doubt-meta">
+                    <span class="doubt-label">Course Code:</span>
+                    <p id="doubtCourseCode" class="doubt-meta-text">Loading...</p>
+                </div>
+
+                <!-- Teacher Display -->
+                <div class="doubt-meta">
+                    <span class="doubt-label">Teacher:</span>
+                    <p id="doubtTeacher" class="doubt-meta-text">Loading...</p>
+                </div>
+
+                <!-- Question Display -->
+                <div class="doubt-body">
+                    <span class="doubt-label">Question:</span>
+                    <p id="doubtQuestion" class="doubt-question">Loading...</p>
+                </div>
+
+                <!-- Timestamp Display -->
+                <div class="doubt-footer">
+                    <span class="doubt-label">Asked on:</span>
+                    <p id="doubtTime" class="doubt-time">Loading...</p>
+                </div>
+
+            </div>
+
+            <!-- No Data Message -->
+            <div id="noDataMessage" class="no-data" style="display: none;">
+                <p>📭 No doubts have been submitted yet.</p>
+                <p>Be the first to ask a question!</p>
+                <a href="index.html" class="btn-link">Submit a Doubt</a>
+            </div>
+
+            <!-- Error Message Display -->
+            <div id="errorMessage" class="error-message" style="display: none;">
+                <p>❌ Error loading doubt. Please try again later.</p>
+                <button onclick="fetchLatestDoubt()" class="btn-retry">Retry</button>
+            </div>
+
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>ProfSensei © 2025 | Helping students learn without fear</p>
+        </footer>
+
+    </div>
+
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>
+
+    <!-- Auto-fetch latest doubt when page loads -->
+    <script>
+        // This runs automatically when the page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            fetchLatestDoubt(); // Call the function to get latest doubt
+        });
+    </script>
+
+    <!--
+    ============================================
+    DEMO DATA EXAMPLE (expected from backend):
+    ============================================
+    Expected JSON response from backend:
+    {
+        "id": 1,
+        "subject": "Operating Systems",
+        "courseCode": "CS301",
+        "teacher": "Dr. Sharma",
+        "question": "What is the difference between process and thread?",
+        "createdAt": "2025-11-29T10:30:00Z"
+    }
+    
+    OR if no data exists:
+    {
+        "data": null
+    }
+    OR
+    []
+    ============================================
+    -->
+
+</body>
+</html>

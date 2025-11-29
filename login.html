@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfSensei - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+    ============================================
+    LOGIN PAGE INSTRUCTIONS:
+    ============================================
+    1. This is the landing page where users choose their role
+    2. Students can submit doubts and view latest doubts
+    3. Teachers can view and answer all doubts assigned to them
+    4. Anonymous - students don't need to login with credentials
+    5. Teachers select their name to see their doubts only
+    ============================================
+    -->
+
+    <div class="login-wrapper">
+        <div class="login-container">
+            
+            <!-- Header Section -->
+            <header class="login-header">
+                <h1>🎓 ProfSensei</h1>
+                <p class="login-subtitle">Anonymous Doubt Box</p>
+                <p class="login-description">Choose your role to continue</p>
+            </header>
+
+            <!-- Role Selection Cards -->
+            <div class="role-cards">
+                
+                <!-- Student Card -->
+                <div class="role-card student-card" onclick="loginAsStudent()">
+                    <div class="role-icon">👨‍🎓</div>
+                    <h2>I'm a Student</h2>
+                    <p>Ask questions anonymously</p>
+                    <button class="role-btn student-btn">
+                        Continue as Student →
+                    </button>
+                </div>
+
+                <!-- Teacher Card -->
+                <div class="role-card teacher-card" onclick="loginAsTeacher()">
+                    <div class="role-icon">👨‍🏫</div>
+                    <h2>I'm a Teacher</h2>
+                    <p>Answer student doubts</p>
+                    <button class="role-btn teacher-btn">
+                        Continue as Teacher →
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Footer Section -->
+            <footer class="login-footer">
+                <p>ProfSensei © 2025 | Helping students learn without fear</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- JavaScript for role selection -->
+    <script>
+        /**
+         * loginAsStudent()
+         * Redirects to student dashboard (submit doubt page)
+         */
+        function loginAsStudent() {
+            console.log("User selected: Student");
+            // Store role in sessionStorage so we can check it later
+            sessionStorage.setItem("userRole", "student");
+            // Redirect to student page
+            window.location.href = "student.html";
+        }
+
+        /**
+         * loginAsTeacher()
+         * Redirects to teacher login page (with credentials required)
+         */
+        function loginAsTeacher() {
+            console.log("User selected: Teacher");
+            // Redirect to teacher login page with authentication
+            window.location.href = "teacher-login.html";
+        }
+    </script>
+
+</body>
+</html>

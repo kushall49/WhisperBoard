@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - ProfSensei</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+    ============================================
+    TEACHER DASHBOARD INSTRUCTIONS:
+    ============================================
+    1. This is the teacher's page to view and answer student doubts
+    2. Teachers must be authenticated to access this page
+    3. Teachers can see all doubts assigned to them
+    4. Teachers can write answers and submit them
+    5. Protected route - redirects to login if not authenticated
+    ============================================
+    -->
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>👨‍🏫 ProfSensei - Teacher Dashboard</h1>
+            <p class="subtitle">Welcome, <span id="teacherNameDisplay">Teacher</span>!</p>
+        </header>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="teacher-dashboard.html" class="nav-link active">My Doubts</a>
+            <a href="#" onclick="logoutTeacher()" class="nav-link logout-link">🚪 Logout</a>
+        </nav>
+
+        <!-- Teacher Filter Section -->
+        <div class="teacher-filter">
+            <h3>👤 Your Assigned Doubts</h3>
+            <p>Viewing doubts assigned to: <strong id="assignedTeacher">Loading...</strong></p>
+            <button onclick="loadDoubts()" class="btn-submit">Refresh Doubts</button>
+        </div>
+
+        <!-- Doubts List Section -->
+        <div class="doubts-container">
+            <h2>📋 Pending Doubts</h2>
+            
+            <!-- Loading Indicator -->
+            <div id="loadingDoubts" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading doubts...</p>
+            </div>
+
+            <!-- Doubts List -->
+            <div id="doubtsList"></div>
+
+            <!-- No Doubts Message -->
+            <div id="noDoubtsMessage" class="no-data" style="display: none;">
+                <p>📭 No pending doubts at the moment.</p>
+                <p>Great job! All doubts have been answered.</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorLoadingDoubts" class="error-message" style="display: none;">
+                <p>❌ Error loading doubts. Please try again.</p>
+                <button onclick="loadDoubts()" class="btn-retry">Retry</button>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>ProfSensei © 2025 | Helping students learn without fear</p>
+        </footer>
+    </div>
+
+    <!-- Answer Modal (Popup) -->
+    <div id="answerModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAnswerModal()">&times;</span>
+            
+            <h2>✍️ Write Your Answer</h2>
+            
+            <!-- Display the question being answered -->
+            <div class="modal-doubt-info">
+                <div class="modal-field">
+                    <strong>Subject:</strong>
+                    <p id="modalSubject"></p>
+                </div>
+                <div class="modal-field">
+                    <strong>Course Code:</strong>
+                    <p id="modalCourseCode"></p>
+                </div>
+                <div class="modal-field">
+                    <strong>Question:</strong>
+                    <p id="modalQuestion"></p>
+                </div>
+            </div>
+
+            <!-- Answer Form -->
+            <form id="answerForm" onsubmit="submitAnswer(event)">
+                <input type="hidden" id="doubtId" value="">
+                
+                <div class="form-group">
+                    <label for="answerText">Your Answer</label>
+                    <textarea 
+                        id="answerText" 
+                        name="answerText" 
+                        rows="8"
+                        placeholder="Write your detailed answer here..."
+                        required
+                        maxlength="2000"
+                    ></textarea>
+                    <small class="field-hint">Provide a clear and detailed explanation (max 2000 characters)</small>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-submit" id="submitAnswerBtn">Submit Answer</button>
+                    <button type="button" class="btn-cancel" onclick="closeAnswerModal()">Cancel</button>
+                </div>
+            </form>
+
+            <!-- Message box for answer submission -->
+            <div id="answerMessageBox" class="message-box"></div>
+        </div>
+    </div>
+
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>
+
+    <!-- Check if teacher is authenticated -->
+    <script>
+        /**
+         * Check authentication on page load
+         * Redirect to login if not authenticated
+         */
+        window.addEventListener('DOMContentLoaded', function() {
+            const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+            const userRole = sessionStorage.getItem("userRole");
+            const teacherName = sessionStorage.getItem("teacherName");
+            
+            console.log("Auth check - isAuthenticated:", isAuthenticated);
+            console.log("Auth check - userRole:", userRole);
+            console.log("Auth check - teacherName:", teacherName);
+            
+            // Check if authenticated as teacher
+            if (isAuthenticated !== "true" || userRole !== "teacher" || !teacherName) {
+                console.log("Authentication failed - redirecting to login");
+                alert("⚠️ Please login to access the Teacher Dashboard");
+                window.location.href = "teacher-login.html";
+                return;
+            }
+            
+            // Display teacher name
+            const teacherNameDisplay = document.getElementById("teacherNameDisplay");
+            const assignedTeacher = document.getElementById("assignedTeacher");
+            
+            if (teacherNameDisplay) {
+                teacherNameDisplay.textContent = teacherName;
+            }
+            if (assignedTeacher) {
+                assignedTeacher.textContent = teacherName;
+            }
+            
+            // Auto-load doubts for this teacher
+            loadDoubts();
+        });
+
+        /**
+         * logoutTeacher()
+         * 
+         * Purpose: Clear session and logout teacher
+         */
+        function logoutTeacher() {
+            if (confirm("Are you sure you want to logout?")) {
+                console.log("Teacher logging out...");
+                
+                // Clear all session data
+                sessionStorage.removeItem("isAuthenticated");
+                sessionStorage.removeItem("userRole");
+                sessionStorage.removeItem("teacherName");
+                sessionStorage.removeItem("loginTime");
+                sessionStorage.clear();
+                
+                // Redirect to login page
+                window.location.href = "login.html";
+            }
+        }
+    </script>
+
+    <!--
+    ============================================
+    DEMO DATA EXAMPLE:
+    ============================================
+    Backend should return list of doubts:
+    [
+        {
+            "id": 1,
+            "subject": "Data Structures",
+            "courseCode": "CS201",
+            "teacher": "Dr. Sharma",
+            "question": "What is the difference between Stack and Queue?",
+            "answer": null,
+            "status": "pending",
+            "createdAt": "2025-11-29T10:30:00Z"
+        },
+        {
+            "id": 2,
+            "subject": "Algorithms",
+            "courseCode": "CS301",
+            "teacher": "Dr. Sharma",
+            "question": "Explain binary search algorithm",
+            "answer": null,
+            "status": "pending",
+            "createdAt": "2025-11-29T11:00:00Z"
+        }
+    ]
+    
+    When teacher submits answer:
+    POST to backend with:
+    {
+        "doubtId": 1,
+        "answer": "Stack follows LIFO (Last In First Out)...",
+        "status": "answered"
+    }
+    ============================================
+    -->
+
+</body>
+</html>
